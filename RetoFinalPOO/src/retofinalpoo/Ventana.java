@@ -34,10 +34,10 @@ public class Ventana extends JFrame implements ActionListener{
     private JButton volverPanel2, boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8, boton9, boton10, boton11, boton12, boton13, boton14, boton15, boton16;
     
     public Ventana(){
-        inicioJuego();
+        inicioComponentes();
     }
     
-    private void inicioJuego(){
+    private void inicioComponentes(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(800,500);
         this.setTitle("Reto Final");
@@ -68,6 +68,12 @@ public class Ventana extends JFrame implements ActionListener{
         mainPanel.add(panelJuego);
         panelJuego.setEnabled(true);
         panelJuego.setVisible(true);
+        
+        inicioJuego();
+    }
+    
+    private void inicioJuego(){
+        
         
     }
     
