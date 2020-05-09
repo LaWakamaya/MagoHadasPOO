@@ -77,6 +77,10 @@ public class Ventana extends JFrame implements ActionListener{
         
     }
     
+    private void turnoMago(){
+        
+    }
+    
     private void componentesJuego(){
         
         atacar = new JButton("Atacar");
