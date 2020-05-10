@@ -11,6 +11,8 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -32,17 +34,18 @@ public class Ventana extends JFrame implements ActionListener{
     private boolean ogroDead = false, revivirOgro = false;
     
     private JButton atacar, bloquear, rescatar, contruir, vidajmas, vidajmenos, atacarMago, atacarOgro;
-    private JLabel texto;
+    private JLabel texto,timer,hadasRes;
     private JPanel mainPanel, panelJuego, panelRescatar, panelConstruir;
     
     public int VIDA1 = 0;
     
     private JButton volverPanel1, rescatarHadas;
     
-    private JButton volverPanel2, boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8, boton9, boton10, boton11, boton12, boton13, boton14, boton15, boton16;
+    private JButton volverPanel2, boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8, boton9, boton10, boton11, boton12, boton13, boton14, boton15, boton16, construirCasa;
     
-    private boolean rescate=false;
+    private int contador=0;
     private int barra=0;
+    private boolean rescate=false;
     
     public Ventana(){
         inicioComponentes();
@@ -176,6 +179,11 @@ public class Ventana extends JFrame implements ActionListener{
 //******************************BOTONES DEL RESCATE DE LA HADA**********************
     private void componentesRescatar(){
         
+        hadasRes = new JLabel("                             Presiona el boton para iniciar el rescate");
+        hadasRes.setBounds(200, 250, 400, 50);
+        hadasRes.setOpaque(true);
+        panelRescatar.add(hadasRes);
+        
         volverPanel1 = new JButton("Panel 1");
         volverPanel1.setBounds(20, 20, 100, 50);
         volverPanel1.setBackground(Color.white);
@@ -191,6 +199,17 @@ public class Ventana extends JFrame implements ActionListener{
     }
 //******************************BOTONES DE LA CONSTRUCCION DE LA CASA**************** 
     private void componentesConstruir(){
+        
+        timer = new JLabel("10");
+        timer.setBounds(600, 50, 100, 50);
+        timer.setOpaque(true);
+        panelConstruir.add(timer);
+        
+        construirCasa = new JButton("Construir!");
+        construirCasa.setBounds(350, 390, 100, 50);
+        construirCasa.setBackground(Color.white);
+        construirCasa.addActionListener(this);
+        panelConstruir.add(construirCasa);
         
         volverPanel2 = new JButton("Panel 1");
         volverPanel2.setBounds(20, 20, 100, 50);
@@ -349,7 +368,8 @@ public class Ventana extends JFrame implements ActionListener{
             panelRescatar.setEnabled(true);
             panelRescatar.setVisible(true);
             repaint();
-            //rescatar();
+            
+            
             turnoMago();
         }
         
@@ -362,15 +382,21 @@ public class Ventana extends JFrame implements ActionListener{
             panelConstruir.setEnabled(true);
             panelConstruir.setVisible(true);
             repaint();
-            //construir();
+            
             turnoMago();
         }
         
        
         
         if(e.getSource()==rescatarHadas){
+                   
+          if(contador==1)
+          {
+              System.out.println(minijuegoHada(getBarra(),jugador1.getHadasInv())+" hadas rescatadas");
+              hadasRes.setText("                                            Haz rescatado "+ minijuegoHada(getBarra(),jugador1.getHadasInv())+ " hadas");
+          }
+          contador++;  
             
-            repaint();
         }
         
         
@@ -380,6 +406,9 @@ public class Ventana extends JFrame implements ActionListener{
             panelRescatar.setEnabled(false);
             panelRescatar.setVisible(false);
             repaint();
+            hadasRes.setText("                             Presiona el boton para iniciar el rescate");
+            contador=0;
+            barra=0;
         }
         
         if(e.getSource()==volverPanel2){
@@ -424,23 +453,112 @@ public class Ventana extends JFrame implements ActionListener{
            g.setColor(Color.red);
            g.fillRect(570, 204,40, 52);
            
-           while(rescate!=true && barra<600)
-           {
+           
                 g.setColor(Color.gray);
-                g.fillRect(150+barra, 190,15, 79);
-                barra++;
+                g.fillRect(150+barra, 190,5, 79);
+                if(contador==1)
+                {
+                    
+                        
+               try {
+                   hadasRes.setText("");
+                   barra++;
+                   Thread.sleep(2);
+               } catch (InterruptedException ex) {
+                   Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+               }
+                    
+                    
+                }
+                
+                if(barra>500)
+                {
+                    barra=0;
+                }
                 
                 
                 repaint();
-           }
+           
            
        }
+       if(panelConstruir.isEnabled())
+       {
+           
+       }
+       
+       
         
     }
-    
-    void miniJHadas()
-    {
-        
+////////////MINIJUEGO HADAS////////////////////////////////////////
+    public int getBarra() {
+        return barra;
+    }
+
+    public void setBarra(int barra) {
+        this.barra = barra;
     }
     
+     public int minijuegoHada(int barra,int hadasInv)
+    {                    
+                   
+        
+        if(barra>=100 &&barra<=295 )
+        {
+            if(hadasInv!=5)
+            {
+                hadasInv++;
+            }
+            
+        }
+        else if(barra>=296 &&barra<=420 )
+        {
+            if(hadasInv>=4)
+            {
+                hadasInv=5;
+            }
+            else
+            {
+                hadasInv+=2;
+            }
+            
+        }
+        else if(barra>=421 &&barra<=460 )
+        {
+            if(hadasInv>=3)
+            {
+                hadasInv=5;
+            }
+            else
+            {
+                hadasInv+=3;
+            }
+            
+        }
+        else if(barra>500)
+        {
+            
+            barra=0;
+            
+        }
+        else
+        {
+                
+        }
+        
+        
+        System.out.println(barra);
+        System.out.println("ejecucion");
+                    
+            
+        return hadasInv;
+            
+    }
+    
+     
+     
+     
+     
+     
+///////////////MINIJUEGO CASAS//////////////////////////////////////
+     
 }
