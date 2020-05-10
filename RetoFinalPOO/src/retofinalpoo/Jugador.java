@@ -5,29 +5,36 @@
  */
 package retofinalpoo;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  *
  * @author Alan Franco
  */
 public class Jugador {
     
+    int vidamax;
     int vida;
     int damage;
     int hadasInv;
     int hadasResc;
     int poderHadas;
     
+    boolean bloqueando;
+    
     void Jugador(){
-        this.vida = 300;
+        this.vidamax = 300;
+        this.vida = vidamax;
         this.damage = 20;
         this.poderHadas = 0;
         this.hadasInv = 0;
         this.hadasResc= 0;
+        this.bloqueando = false;
     }
     
-    int calcularDamage(){
+    public int calcularDamage(){
         int damageF = 0;
-        int critico = (int) Math.random() * 11;
+        int critico = ThreadLocalRandom.current().nextInt(1, 10 + 1);
         if(critico==10){
             damageF = (int) (((damage * (0.8 + Math.random() * (1.2 - 0.8))) + (damage * (0.3 * poderHadas))) * 2);
         }
@@ -39,7 +46,20 @@ public class Jugador {
         }
         return damageF;
     }
+    
+    public void recibirDamage(int dano){
+        if(bloqueando){
+            this.vida = (this.vida - dano)/2;
+            this.bloqueando = false;
+        }else{
+            this.vida = (this.vida - dano);
+        }
+    }
 //**************************GETTERS**********************************
+    public int getVidaMax() {
+        return vidamax;
+    }
+    
     public int getVida() {
         return vida;
     }
@@ -59,9 +79,17 @@ public class Jugador {
     public int getPoderHadas() {
         return poderHadas;
     }
+    
+    public boolean getBloqueando(){
+        return bloqueando;
+    }
 
 //**********************SETTERS**************************************
 
+    public void setVidaMax(int vidamax) {
+        this.vidamax = vidamax;
+    }
+    
     public void setVida(int vida) {
         this.vida = vida;
     }
@@ -82,5 +110,8 @@ public class Jugador {
         this.poderHadas = poderHadas;
     }
     
+    public void setBloqueando(boolean bloquear){
+        this.bloqueando = bloquear;
+    }
     
 }

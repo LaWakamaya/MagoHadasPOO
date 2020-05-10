@@ -5,34 +5,37 @@
  */
 package retofinalpoo;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  *
  * @author Alan Franco
  */
 public class Ogro {
     
+    int vidamax;
     int vida;
     int damage;
-    boolean MBoost;
     int boost;
+    
     void Ogro(){
-        this.vida = 100;
+        this.vidamax = 100;
+        this.vida = vidamax;
         this.damage = 20;
         this.boost = 0;
     }
-    
-    int calcularDamage(){
-        if(MBoost==true)
-        {
-            boost=10;
-        }
-        else
-        {
-            boost=0;
-        }
+    /*
+    void Ogro(int vidamax, int vida, int damage, int boost){
+        this.vidamax = vidamax;
+        this.vida = vida;
+        this.damage = damage;
+        this.boost = boost;
+    }
+    */
+    public int calcularDamage(){
         
         int damageF = 0;
-        int critico = (int) Math.random() * 11;
+        int critico = ThreadLocalRandom.current().nextInt(1, 10 + 1);
         if(critico==10){
             damageF = (int) (((damage * (0.6 + Math.random() * (1.4 - 0.6))) + (boost)) * 2);
         }
@@ -45,8 +48,16 @@ public class Ogro {
         return damageF;
     }
     
+    public void recibirDamage(int dano){
+        this.vida = (this.vida - dano);
+    }
+    
 //********************GETTERS***********************
 
+    public int getVidaMax() {
+        return vidamax;
+    }
+    
     public int getVida() {
         return vida;
     }
@@ -57,6 +68,10 @@ public class Ogro {
 
 //*******************SETTERS***********************
 
+    public void setVidaMax(int vidamax) {
+        this.vidamax = vidamax;
+    }
+    
     public void setVida(int vida) {
         this.vida = vida;
     }

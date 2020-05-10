@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.ThreadLocalRandom;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import static javax.swing.JFrame.EXIT_ON_CLOSE;
@@ -24,7 +25,11 @@ import javax.swing.JPanel;
  */
 public class Ventana extends JFrame implements ActionListener{
     
-    private JButton atacar, bloquear, rescatar, contruir, vidajmas, vidajmenos;
+    private Jugador jugador1 = new Jugador();
+    private Ogro ogro1 = new Ogro();
+    private Mago mago1 = new Mago();
+    
+    private JButton atacar, bloquear, rescatar, contruir, vidajmas, vidajmenos, atacarMago, atacarOgro;
     private JLabel texto;
     private JPanel mainPanel, panelJuego, panelRescatar, panelConstruir;
     
@@ -85,7 +90,23 @@ public class Ventana extends JFrame implements ActionListener{
     }
     
     private void turnoMago(){
-        
+        int turnoM = ThreadLocalRandom.current().nextInt(1, 4 + 1);
+        if(turnoM == 1){
+            texto.setText("Ogro ataca");
+            jugador1.recibirDamage(ogro1.calcularDamage());
+        }
+        if(turnoM == 2){
+            texto.setText("Mago cura ogro");
+            mago1.curarOgro(ogro1);
+        }
+        if(turnoM == 3){
+            texto.setText("Mago potencia ogro");
+            mago1.boostOgro(ogro1);
+        }
+        if(turnoM == 4){
+            texto.setText("Mago roba hadas");
+            mago1.robarHadas(jugador1);
+        }
     }
 //******************BOTONES DE LA BATALLA PRINCIPAL********************************
     private void componentesJuego(){
@@ -113,6 +134,20 @@ public class Ventana extends JFrame implements ActionListener{
         contruir.setBackground(Color.white);
         contruir.addActionListener(this);
         panelJuego.add(contruir);
+        
+        atacarMago = new JButton("Mago");
+        atacarMago.setBounds(570, 250, 100, 50);
+        atacarMago.setBackground(Color.white);
+        atacarMago.addActionListener(this);
+        panelJuego.add(atacarMago);
+        atacarMago.setVisible(false);
+        
+        atacarOgro = new JButton("Ogro");
+        atacarOgro.setBounds(450, 250, 100, 50);
+        atacarOgro.setBackground(Color.white);
+        atacarOgro.addActionListener(this);
+        panelJuego.add(atacarOgro);
+        atacarOgro.setVisible(false);
         
         texto = new JLabel("SAMPLE TEXT XD");
         texto.setBounds(25, 320, 735, 50);
@@ -261,12 +296,33 @@ public class Ventana extends JFrame implements ActionListener{
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
         if(e.getSource()==atacar){
-            texto.setText("JUGADOR ATACA");
+            texto.setText("A quien deseas atacar?");
+            //texto.setText(""+jugador1.calcularDamage());
+            atacarMago.setVisible(true);
+            atacarOgro.setVisible(true);
+        }
+        
+        if(e.getSource()==atacarMago){
+            texto.setText("Jugador ataca al mago");
+            mago1.recibirDamage(jugador1.calcularDamage());
+            texto.setText("Mago: "+mago1.getVida()+"/"+mago1.getVidaMax());
+            atacarMago.setVisible(false);
+            atacarOgro.setVisible(false);
+            turnoMago();
+        }
+        
+        if(e.getSource()==atacarOgro){
+            texto.setText("Jugador ataca al ogro");
+            ogro1.recibirDamage(jugador1.calcularDamage());
+            texto.setText("Ogro: "+ogro1.getVida()+"/"+ogro1.getVidaMax());
+            atacarMago.setVisible(false);
+            atacarOgro.setVisible(false);
             turnoMago();
         }
         
         if(e.getSource()==bloquear){
             texto.setText("JUGADOR BLOQUEA");
+            jugador1.setBloqueando(true);
             turnoMago();
         }
         
@@ -329,10 +385,21 @@ public class Ventana extends JFrame implements ActionListener{
         
         super.paint(g);
         if(panelJuego.isEnabled()){
+            //****BARRA DE VIDA JUGADOR****
             g.setColor(Color.black);
             g.fillRect(25, 100, 29, 240);
             g.setColor(Color.red);
             g.fillRect(29, 105+VIDA1, 21, 230-VIDA1);
+            //****BARRA DE VIDA OGRO****
+            g.setColor(Color.black);
+            g.fillRect(700, 100, 29, 240);
+            g.setColor(Color.green);
+            g.fillRect(704, 105+VIDA1, 21, 230-VIDA1);
+            //****BARRA DE VIDA MAGO****
+            g.setColor(Color.black);
+            g.fillRect(750, 100, 29, 240);
+            g.setColor(Color.magenta);
+            g.fillRect(754, 105+VIDA1, 21, 230-VIDA1);
         }
        if(panelRescatar.isEnabled()){
            g.setColor(Color.black);

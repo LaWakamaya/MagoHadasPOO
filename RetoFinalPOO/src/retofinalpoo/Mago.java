@@ -11,6 +11,7 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Mago {
     
+    int vidamax;
     int vida;
     int hadasRobadas;
     int poder;
@@ -18,12 +19,13 @@ public class Mago {
     
     void Mago()
     {
-        this.vida = 100;
+        this.vidamax = 100;
+        this.vida = vidamax;
         this.hadasRobadas = 100;
         this.poder = hadasRobadas/10;
     }
 
-    void robarHadas(Jugador j)
+    public void robarHadas(Jugador j)
     {
         
         int hadasActual;
@@ -36,34 +38,43 @@ public class Mago {
         {
             hadasRob=0;
         }
-        j.setHadasResc (hadasRob);
+        j.setHadasInv(hadasRob);
         aumentoP=getHadasRobadas();
         aumentoP=aumentoP+robo;
         setHadasRobadas(aumentoP);
-        
+        this.poder = (int) (Math.floor(hadasRobadas/10));
     }           
 
-    void curarOgro(Ogro o)
+    public void curarOgro(Ogro o)
     {
         int vidaActual;
         int vidaNueva;
         vidaActual=o.getVida();
         vidaNueva=vidaActual+20;
-        if(vidaNueva>100)
+        if(vidaNueva>=o.vidamax)
         {
-            vidaNueva=100;
+            vidaNueva=vidamax;
         }
         o.setVida(vidaNueva);
     }
 
-    void boostOgro(Ogro o)
+    public void boostOgro(Ogro o)
     {
-        o.MBoost=true;
+        o.boost = o.boost + 10;
+    }
+    
+    public void recibirDamage(int dano){
+        float coefDano = (10-this.poder)/10;
+        this.vida =  (this.vida - ((int) (dano * coefDano)));
     }
 
 
 //*******************GETTERS***********************
 
+    public int getVidaMax() {
+        return vidamax;
+    }
+    
     public int getVida() {
         return vida;
     }
@@ -78,6 +89,10 @@ public class Mago {
     
 //******************SETTERS***************************
 
+    public void setVidaMax(int vidamax) {
+        this.vidamax = vidamax;
+    }
+    
     public void setVida(int vida) {
         this.vida = vida;
     }
