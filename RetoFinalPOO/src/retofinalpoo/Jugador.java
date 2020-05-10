@@ -16,8 +16,7 @@ public class Jugador {
     int hadasInv;
     int hadasResc;
     int poderHadas;
-    Mago m = new Mago();
-    Ogro o = new Ogro();
+    
     void Jugador(){
         this.vida = 300;
         this.damage = 20;
@@ -26,72 +25,19 @@ public class Jugador {
         this.hadasResc= 0;
     }
     
-    void calcularDamage(){
+    int calcularDamage(){
         int damageF = 0;
         int critico = (int) Math.random() * 11;
-        int vO=0;
         if(critico==10){
             damageF = (int) (((damage * (0.8 + Math.random() * (1.2 - 0.8))) + (damage * (0.3 * poderHadas))) * 2);
-            vO=(o.getVida())-damageF;
-            if(vO<0)
-            {
-                vO=0;
-            }
-            o.setVida(vO);
         }
         if(critico==1){
             damageF = (int) (((damage * (0.8 + Math.random() * (1.2 - 0.8))) + (damage * (0.3 * poderHadas))) / 2);
-            vO=(o.getVida())-damageF;
-            if(vO<0)
-            {
-                vO=0;
-            }
-            o.setVida(vO);
         }
         else{
             damageF = (int) ((damage * (0.8 + Math.random() * (1.2 - 0.8))) + (damage * (0.3 * poderHadas))) ;
-            vO=(o.getVida())-damageF;
-            if(vO<0)
-            {
-                vO=0;
-            }
-            o.setVida(vO);
         }
-        
-    }
-    
-    void calcularDamageM(){
-        int damageF = 0;
-        int critico = (int) Math.random() * 11;
-        int vM=0;
-        if(critico==10){
-            damageF = (int) ((((damage * (0.8 + Math.random() * (1.2 - 0.8))) + (damage * (0.3 * poderHadas))) * 2)/m.poder);
-            vM=(m.getVida())-damageF;
-            if(vM<0)
-            {
-                vM=0;
-            }
-            m.setVida(vM);
-        }
-        if(critico==1){
-            damageF = (int) ((((damage * (0.8 + Math.random() * (1.2 - 0.8))) + (damage * (0.3 * poderHadas))) / 2)/m.poder);
-            vM=(m.getVida())-damageF;
-            if(vM<0)
-            {
-                vM=0;
-            }
-            m.setVida(vM);
-        }
-        else{
-            damageF = (int) (((damage * (0.8 + Math.random() * (1.2 - 0.8))) + (damage * (0.3 * poderHadas))/m.poder)) ;
-            vM=(m.getVida())-damageF;
-            if(vM<0)
-            {
-                vM=0;
-            }
-            m.setVida(vM);
-        }
-        
+        return damageF;
     }
 //**************************GETTERS**********************************
     public int getVida() {
