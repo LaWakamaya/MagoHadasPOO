@@ -12,37 +12,38 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Mago {
     
     int vida;
+    int hadasRobadas;
     int poder;
     
-    Ogro o = new Ogro();
-    Jugador j = new Jugador();
     
     void Mago()
     {
-        this.vida=100;
-        this.poder=100;
+        this.vida = 100;
+        this.hadasRobadas = 100;
+        this.poder = hadasRobadas/10;
     }
 
-    void robarHadas()
+    void robarHadas(Jugador j)
     {
         
         int hadasActual;
-        int hadasRobadas;
+        int hadasRob;
         int robo = ThreadLocalRandom.current().nextInt(1, 5 + 1);
         int aumentoP;
-        hadasActual=j.getHadasResc();
-        hadasRobadas=hadasActual-robo;
-        if(hadasRobadas<0)
+        hadasActual=j.getHadasInv();
+        hadasRob=hadasActual-robo;
+        if(hadasRob<0)
         {
-            hadasRobadas=0;
+            hadasRob=0;
         }
-        j.setHadasResc(hadasRobadas);
-        aumentoP=getPoder();
+        j.setHadasResc (hadasRob);
+        aumentoP=getHadasRobadas();
         aumentoP=aumentoP+robo;
-        setPoder(aumentoP);
+        setHadasRobadas(aumentoP);
+        
     }           
 
-    void curarOgro()
+    void curarOgro(Ogro o)
     {
         int vidaActual;
         int vidaNueva;
@@ -55,7 +56,7 @@ public class Mago {
         o.setVida(vidaNueva);
     }
 
-    void boostOgro()
+    void boostOgro(Ogro o)
     {
         o.MBoost=true;
     }
@@ -65,6 +66,10 @@ public class Mago {
 
     public int getVida() {
         return vida;
+    }
+    
+    public int getHadasRobadas(){
+        return hadasRobadas;
     }
 
     public int getPoder() {
@@ -81,4 +86,7 @@ public class Mago {
         this.poder = poder;
     }
     
+    public void setHadasRobadas(int hadas){
+        this.hadasRobadas = hadas;
+    }
 }

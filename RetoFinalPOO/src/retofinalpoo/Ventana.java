@@ -24,7 +24,7 @@ import javax.swing.JPanel;
  */
 public class Ventana extends JFrame implements ActionListener{
     
-    private JButton atacar, bloquear, rescatar, contruir, vidajmas, vidajmenos, cambiarPanel2, cambiarPanel3;
+    private JButton atacar, bloquear, rescatar, contruir, vidajmas, vidajmenos;
     private JLabel texto;
     private JPanel mainPanel, panelJuego, panelRescatar, panelConstruir;
     
@@ -40,7 +40,7 @@ public class Ventana extends JFrame implements ActionListener{
     public Ventana(){
         inicioComponentes();
     }
-    //*****************CREA LOS 3 PANELES QUE EXISTEN*******************************
+    //***************CREA EL PANEL PARA GUARDAR PANELES*****************************
     private void inicioComponentes(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(800,500);
@@ -262,10 +262,12 @@ public class Ventana extends JFrame implements ActionListener{
         
         if(e.getSource()==atacar){
             texto.setText("JUGADOR ATACA");
+            turnoMago();
         }
         
         if(e.getSource()==bloquear){
             texto.setText("JUGADOR BLOQUEA");
+            turnoMago();
         }
         
         if(e.getSource()==rescatar){
@@ -275,6 +277,8 @@ public class Ventana extends JFrame implements ActionListener{
             panelRescatar.setEnabled(true);
             panelRescatar.setVisible(true);
             repaint();
+            //rescatar();
+            turnoMago();
         }
         
         if(e.getSource()==contruir){
@@ -284,6 +288,8 @@ public class Ventana extends JFrame implements ActionListener{
             panelConstruir.setEnabled(true);
             panelConstruir.setVisible(true);
             repaint();
+            //construir();
+            turnoMago();
         }
         
         if(e.getSource()==vidajmas){
