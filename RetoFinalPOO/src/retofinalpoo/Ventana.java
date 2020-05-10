@@ -169,17 +169,7 @@ public class Ventana extends JFrame implements ActionListener{
         texto.setOpaque(true);
         panelJuego.add(texto);
         
-        vidajmas = new JButton("Subir vida");
-        vidajmas.setBounds(60, 20, 100, 50);
-        vidajmas.setBackground(Color.white);
-        vidajmas.addActionListener(this);
-        panelJuego.add(vidajmas);
         
-        vidajmenos = new JButton("Bajar vida");
-        vidajmenos.setBounds(180, 20, 100, 50);
-        vidajmenos.setBackground(Color.white);
-        vidajmenos.addActionListener(this);
-        panelJuego.add(vidajmenos);
         
         
     }
@@ -324,6 +314,7 @@ public class Ventana extends JFrame implements ActionListener{
             atacarMago.setVisible(false);
             atacarOgro.setVisible(false);
             turnoMago();
+            repaint();
         }
         
         if(e.getSource()==atacarOgro){
@@ -337,6 +328,7 @@ public class Ventana extends JFrame implements ActionListener{
                 ogroDead = true;
             }
             turnoMago();
+            repaint();
         }
         
         if(e.getSource()==bloquear){
@@ -345,6 +337,7 @@ public class Ventana extends JFrame implements ActionListener{
             atacarOgro.setVisible(false);
             jugador1.setBloqueando(true);
             turnoMago();
+            repaint();
         }
         
         if(e.getSource()==rescatar){
@@ -373,15 +366,7 @@ public class Ventana extends JFrame implements ActionListener{
             turnoMago();
         }
         
-        if(e.getSource()==vidajmas){
-            VIDA1 = VIDA1 - 10;
-            repaint();
-        }
-        
-        if(e.getSource()==vidajmenos){
-            VIDA1 = VIDA1 + 10;
-            repaint();
-        }
+       
         
         if(e.getSource()==rescatarHadas){
             
@@ -414,17 +399,18 @@ public class Ventana extends JFrame implements ActionListener{
             g.setColor(Color.black);
             g.fillRect(25, 100, 29, 240);
             g.setColor(Color.red);
-            g.fillRect(29, 105+VIDA1, 21, 230-VIDA1);
+            g.fillRect(29, (int) (105.0+(229.0-((229.0/300.0)*jugador1.vida))), 21, (int) (230.0-(229.0-((229.0/300.0)*jugador1.vida))));
+            //g.fillRect(29, 105+VIDA1, 21, 230-VIDA1);
             //****BARRA DE VIDA OGRO****
             g.setColor(Color.black);
             g.fillRect(700, 100, 29, 240);
             g.setColor(Color.green);
-            g.fillRect(704, 105+VIDA1, 21, 230-VIDA1);
+            g.fillRect(704, (int) (105.0+(229.0-((229.0/100.0)*ogro1.vida))), 21, (int) (230.0-(229.0-((229.0/100.0)*ogro1.vida))));
             //****BARRA DE VIDA MAGO****
             g.setColor(Color.black);
             g.fillRect(750, 100, 29, 240);
             g.setColor(Color.magenta);
-            g.fillRect(754, 105+VIDA1, 21, 230-VIDA1);
+            g.fillRect(754, (int) (105.0+(229.0-((229.0/100.0)*mago1.vida))), 21, (int) (230.0-(229.0-((229.0/100.0)*mago1.vida))));
         }
        if(panelRescatar.isEnabled()){
            g.setColor(Color.black);

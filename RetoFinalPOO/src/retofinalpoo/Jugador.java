@@ -13,23 +13,23 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Jugador {
     
-    int vidamax;
-    int vida;
-    int damage;
-    int hadasInv;
-    int hadasResc;
-    int poderHadas;
+    int vidamax=300;
+    int vida=300;
+    int damage=20;
+    int hadasInv=0;
+    int hadasResc=0;
+    int poderHadas=0;
     
-    boolean bloqueando;
+    boolean bloqueando=false;
     
-    void Jugador(){
-        this.vidamax = 300;
-        this.vida = vidamax;
-        this.damage = 20;
-        this.poderHadas = 0;
-        this.hadasInv = 0;
-        this.hadasResc= 0;
-        this.bloqueando = false;
+    void Jugador(int vidamax,int vida,int damage,int poderHadas, int hadasInv, int hadasResc,boolean bloqueando){
+        this.vidamax = vidamax;
+        this.vida = vida;
+        this.damage = damage;
+        this.poderHadas = poderHadas;
+        this.hadasInv = hadasInv;
+        this.hadasResc= hadasResc;
+        this.bloqueando = bloqueando;
     }
     
     public int calcularDamage(){

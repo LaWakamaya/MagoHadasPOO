@@ -13,17 +13,17 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Ogro {
     
-    int vidamax;
-    int vida;
-    int damage;
-    int boost;
-    boolean dead;
-    void Ogro(){
-        this.vidamax = 100;
+    int vidamax=100;
+    int vida=100;
+    int damage=20;
+    int boost=0;
+    boolean dead=false;
+    void Ogro(int vidamax,int vida,int damage,int boost,boolean dead){
+        this.vidamax = vidamax;
         this.vida = vidamax;
-        this.damage = 20;
-        this.boost = 0;
-        this.dead = false;
+        this.damage = damage;
+        this.boost = boost;
+        this.dead = dead;
     }
     /*
     void Ogro(int vidamax, int vida, int damage, int boost){

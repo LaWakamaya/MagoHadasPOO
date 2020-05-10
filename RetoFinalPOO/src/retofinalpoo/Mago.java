@@ -11,18 +11,18 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class Mago {
     
-    int vidamax;
-    int vida;
-    int hadasRobadas;
-    int poder;
+    int vidamax=100;
+    int vida=100;
+    int hadasRobadas=100;
+    int poder=hadasRobadas/10;
     
     
-    void Mago()
+    void Mago(int vidamax,int vida, int hadasRobadas,int poder)
     {
-        this.vidamax = 100;
-        this.vida = vidamax;
-        this.hadasRobadas = 100;
-        this.poder = hadasRobadas/10;
+        this.vidamax = vidamax;
+        this.vida = vida;
+        this.hadasRobadas = hadasRobadas;
+        this.poder = poder;
     }
 
     public void robarHadas(Jugador j)
@@ -66,6 +66,7 @@ public class Mago {
     public void revivirOgro(Ogro o){
         o.vida = o.vidamax;
         boostOgro(o);
+        o.dead=false;
     }
     
     public void recibirDamage(int dano){
