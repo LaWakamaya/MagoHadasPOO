@@ -36,13 +36,13 @@ public class Jugador {
         int damageF = 0;
         int critico = ThreadLocalRandom.current().nextInt(1, 10 + 1);
         if(critico==10){
-            damageF = (int) (((damage * (0.8 + Math.random() * (1.2 - 0.8))) + (damage * (0.3 * poderHadas))) * 2);
+            damageF = (int) (((this.damage * (0.8 + Math.random() * (1.2 - 0.8))) + (this.damage * (0.3 * this.poderHadas))) * 2);
         }
         if(critico==1){
-            damageF = (int) (((damage * (0.8 + Math.random() * (1.2 - 0.8))) + (damage * (0.3 * poderHadas))) / 2);
+            damageF = (int) (((this.damage * (0.8 + Math.random() * (1.2 - 0.8))) + (this.damage * (0.3 * this.poderHadas))) / 2);
         }
         else{
-            damageF = (int) ((damage * (0.8 + Math.random() * (1.2 - 0.8))) + (damage * (0.3 * poderHadas))) ;
+            damageF = (int) ((this.damage * (0.8 + Math.random() * (1.2 - 0.8))) + (this.damage * (0.3 * this.poderHadas))) ;
         }
         return damageF;
     }
@@ -57,31 +57,31 @@ public class Jugador {
     }
 //**************************GETTERS**********************************
     public int getVidaMax() {
-        return vidamax;
+        return this.vidamax;
     }
     
     public int getVida() {
-        return vida;
+        return this.vida;
     }
 
     public int getDamage() {
-        return damage;
+        return this.damage;
     }
 
     public int getHadasInv() {
-        return hadasInv;
+        return this.hadasInv;
     }
 
     public int getHadasResc() {
-        return hadasResc;
+        return this.hadasResc;
     }
 
     public int getPoderHadas() {
-        return poderHadas;
+        return this.poderHadas;
     }
     
     public boolean getBloqueando(){
-        return bloqueando;
+        return this.bloqueando;
     }
 
 //**********************SETTERS**************************************

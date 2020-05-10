@@ -63,6 +63,11 @@ public class Mago {
         o.boost = o.boost + 10;
     }
     
+    public void revivirOgro(Ogro o){
+        o.vida = o.vidamax;
+        boostOgro(o);
+    }
+    
     public void recibirDamage(int dano){
         float coefDano = (10-this.poder)/10;
         this.vida =  (this.vida - ((int) (dano * coefDano)));
@@ -72,19 +77,19 @@ public class Mago {
 //*******************GETTERS***********************
 
     public int getVidaMax() {
-        return vidamax;
+        return this.vidamax;
     }
     
     public int getVida() {
-        return vida;
+        return this.vida;
     }
     
     public int getHadasRobadas(){
-        return hadasRobadas;
+        return this.hadasRobadas;
     }
 
     public int getPoder() {
-        return poder;
+        return this.poder;
     }
     
 //******************SETTERS***************************

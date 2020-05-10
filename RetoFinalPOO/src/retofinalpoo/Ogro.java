@@ -17,12 +17,13 @@ public class Ogro {
     int vida;
     int damage;
     int boost;
-    
+    boolean dead;
     void Ogro(){
         this.vidamax = 100;
         this.vida = vidamax;
         this.damage = 20;
         this.boost = 0;
+        this.dead = false;
     }
     /*
     void Ogro(int vidamax, int vida, int damage, int boost){
@@ -50,20 +51,27 @@ public class Ogro {
     
     public void recibirDamage(int dano){
         this.vida = (this.vida - dano);
+        if(this.vida <=0){
+            this.dead = true;
+        }
     }
     
 //********************GETTERS***********************
 
     public int getVidaMax() {
-        return vidamax;
+        return this.vidamax;
     }
     
     public int getVida() {
-        return vida;
+        return this.vida;
     }
 
     public int getDamage() {
-        return damage;
+        return this.damage;
+    }
+    
+    public boolean getDead(){
+        return this.dead;
     }
 
 //*******************SETTERS***********************
@@ -78,6 +86,10 @@ public class Ogro {
 
     public void setDamage(int damage) {
         this.damage = damage;
+    }
+    
+    public void setDead(boolean ded){
+        this.dead = ded;
     }
     
 }

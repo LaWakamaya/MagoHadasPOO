@@ -29,6 +29,8 @@ public class Ventana extends JFrame implements ActionListener{
     private Ogro ogro1 = new Ogro();
     private Mago mago1 = new Mago();
     
+    private boolean ogroDead = false, revivirOgro = false;
+    
     private JButton atacar, bloquear, rescatar, contruir, vidajmas, vidajmenos, atacarMago, atacarOgro;
     private JLabel texto;
     private JPanel mainPanel, panelJuego, panelRescatar, panelConstruir;
@@ -88,25 +90,38 @@ public class Ventana extends JFrame implements ActionListener{
         
         
     }
-    
+    //**************TURNO DEL MAGO*******************
     private void turnoMago(){
-        int turnoM = ThreadLocalRandom.current().nextInt(1, 4 + 1);
-        if(turnoM == 1){
-            texto.setText("Ogro ataca");
-            jugador1.recibirDamage(ogro1.calcularDamage());
+        if(!ogroDead){
+            int turnoM = ThreadLocalRandom.current().nextInt(1, 4 + 1);
+            if(turnoM == 1){
+                texto.setText("Ogro ataca");
+                jugador1.recibirDamage(ogro1.calcularDamage());
+            }
+            if(turnoM == 2){
+                texto.setText("Mago cura ogro");
+                mago1.curarOgro(ogro1);
+            }
+            if(turnoM == 3){
+                texto.setText("Mago potencia ogro");
+                mago1.boostOgro(ogro1);
+            }
+            if(turnoM == 4){
+                texto.setText("Mago roba hadas");
+                mago1.robarHadas(jugador1);
+            }
         }
-        if(turnoM == 2){
-            texto.setText("Mago cura ogro");
-            mago1.curarOgro(ogro1);
+        if(revivirOgro){
+            texto.setText("El mago revive al ogro y aumenta su poder");
+            mago1.revivirOgro(ogro1);
+            revivirOgro = false;
+            ogroDead = false;
         }
-        if(turnoM == 3){
-            texto.setText("Mago potencia ogro");
-            mago1.boostOgro(ogro1);
+        if(ogroDead){
+            texto.setText("El mago revivira al ogro");
+            revivirOgro = true;
         }
-        if(turnoM == 4){
-            texto.setText("Mago roba hadas");
-            mago1.robarHadas(jugador1);
-        }
+        
     }
 //******************BOTONES DE LA BATALLA PRINCIPAL********************************
     private void componentesJuego(){
@@ -317,17 +332,25 @@ public class Ventana extends JFrame implements ActionListener{
             texto.setText("Ogro: "+ogro1.getVida()+"/"+ogro1.getVidaMax());
             atacarMago.setVisible(false);
             atacarOgro.setVisible(false);
+            if(ogro1.getDead())
+            {
+                ogroDead = true;
+            }
             turnoMago();
         }
         
         if(e.getSource()==bloquear){
             texto.setText("JUGADOR BLOQUEA");
+            atacarMago.setVisible(false);
+            atacarOgro.setVisible(false);
             jugador1.setBloqueando(true);
             turnoMago();
         }
         
         if(e.getSource()==rescatar){
             texto.setText("JUGADOR RESCATA HADA");
+            atacarMago.setVisible(false);
+            atacarOgro.setVisible(false);
             panelJuego.setEnabled(false);
             panelJuego.setVisible(false);
             panelRescatar.setEnabled(true);
@@ -339,6 +362,8 @@ public class Ventana extends JFrame implements ActionListener{
         
         if(e.getSource()==contruir){
             texto.setText("JUGADOR CONSTRUYE CASA");
+            atacarMago.setVisible(false);
+            atacarOgro.setVisible(false);
             panelJuego.setEnabled(false);
             panelJuego.setVisible(false);
             panelConstruir.setEnabled(true);
