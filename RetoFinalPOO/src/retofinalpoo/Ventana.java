@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+
 /**
  *
  * @author Alan Franco
@@ -33,10 +34,13 @@ public class Ventana extends JFrame implements ActionListener{
     
     private JButton volverPanel2, boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8, boton9, boton10, boton11, boton12, boton13, boton14, boton15, boton16;
     
+    private boolean rescate=false;
+    private int barra=0;
+    
     public Ventana(){
         inicioComponentes();
     }
-    
+    //*****************CREA LOS 3 PANELES QUE EXISTEN*******************************
     private void inicioComponentes(){
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setSize(800,500);
@@ -45,6 +49,7 @@ public class Ventana extends JFrame implements ActionListener{
         mainPanel.setLayout(new CardLayout(0,0));
         this.getContentPane().add(mainPanel);
         
+ //************************PANEL DE RESCATE DE HADAS********************************
         panelRescatar = new JPanel();
         panelRescatar.setBackground(Color.blue);
         panelRescatar.setLayout(null);
@@ -53,6 +58,7 @@ public class Ventana extends JFrame implements ActionListener{
         panelRescatar.setEnabled(false);
         panelRescatar.setVisible(false);
         
+//************************PANEL DE CONSTRUCCION DE CASA*****************************    
         panelConstruir = new JPanel();
         panelConstruir.setBackground(Color.red);
         panelConstruir.setLayout(null);
@@ -61,6 +67,7 @@ public class Ventana extends JFrame implements ActionListener{
         panelConstruir.setEnabled(false);
         panelConstruir.setVisible(false);
         
+//**********************PANEL DE LA BATALLA PRINCIPAL*******************************       
         panelJuego = new JPanel();
         panelJuego.setBackground(Color.green);
         panelJuego.setLayout(null);
@@ -80,7 +87,7 @@ public class Ventana extends JFrame implements ActionListener{
     private void turnoMago(){
         
     }
-    
+//******************BOTONES DE LA BATALLA PRINCIPAL********************************
     private void componentesJuego(){
         
         atacar = new JButton("Atacar");
@@ -124,19 +131,9 @@ public class Ventana extends JFrame implements ActionListener{
         vidajmenos.addActionListener(this);
         panelJuego.add(vidajmenos);
         
-        cambiarPanel2 = new JButton("Panel 2");
-        cambiarPanel2.setBounds(500, 20, 100, 50);
-        cambiarPanel2.setBackground(Color.white);
-        cambiarPanel2.addActionListener(this);
-        panelJuego.add(cambiarPanel2);
         
-        cambiarPanel3 = new JButton("Panel 3");
-        cambiarPanel3.setBounds(620, 20, 100, 50);
-        cambiarPanel3.setBackground(Color.white);
-        cambiarPanel3.addActionListener(this);
-        panelJuego.add(cambiarPanel3);
     }
-    
+//******************************BOTONES DEL RESCATE DE LA HADA**********************
     private void componentesRescatar(){
         
         volverPanel1 = new JButton("Panel 1");
@@ -152,7 +149,7 @@ public class Ventana extends JFrame implements ActionListener{
         panelRescatar.add(rescatarHadas);
     
     }
-    
+//******************************BOTONES DE LA CONSTRUCCION DE LA CASA**************** 
     private void componentesConstruir(){
         
         volverPanel2 = new JButton("Panel 1");
@@ -257,7 +254,8 @@ public class Ventana extends JFrame implements ActionListener{
         boton16.addActionListener(this);
         panelConstruir.add(boton16);
     }
-    
+   
+//*****************************EJECUCION DE FUNCION DE BOTONES**********************
     @Override
     public void actionPerformed(ActionEvent e) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -272,10 +270,20 @@ public class Ventana extends JFrame implements ActionListener{
         
         if(e.getSource()==rescatar){
             texto.setText("JUGADOR RESCATA HADA");
+            panelJuego.setEnabled(false);
+            panelJuego.setVisible(false);
+            panelRescatar.setEnabled(true);
+            panelRescatar.setVisible(true);
+            repaint();
         }
         
         if(e.getSource()==contruir){
             texto.setText("JUGADOR CONSTRUYE CASA");
+            panelJuego.setEnabled(false);
+            panelJuego.setVisible(false);
+            panelConstruir.setEnabled(true);
+            panelConstruir.setVisible(true);
+            repaint();
         }
         
         if(e.getSource()==vidajmas){
@@ -288,21 +296,11 @@ public class Ventana extends JFrame implements ActionListener{
             repaint();
         }
         
-        if(e.getSource()==cambiarPanel2){
-            panelJuego.setEnabled(false);
-            panelJuego.setVisible(false);
-            panelRescatar.setEnabled(true);
-            panelRescatar.setVisible(true);
+        if(e.getSource()==rescatarHadas){
+            
             repaint();
         }
         
-        if(e.getSource()==cambiarPanel3){
-            panelJuego.setEnabled(false);
-            panelJuego.setVisible(false);
-            panelConstruir.setEnabled(true);
-            panelConstruir.setVisible(true);
-            repaint();
-        }
         
         if(e.getSource()==volverPanel1){
             panelJuego.setEnabled(true);
@@ -341,7 +339,24 @@ public class Ventana extends JFrame implements ActionListener{
            g.fillRect(450, 204,120, 52);
            g.setColor(Color.red);
            g.fillRect(570, 204,40, 52);
+           
+           while(rescate!=true && barra<600)
+           {
+                g.setColor(Color.gray);
+                g.fillRect(150+barra, 190,15, 79);
+                barra++;
+                
+                
+                repaint();
+           }
+           
        }
         
     }
+    
+    void miniJHadas()
+    {
+        
+    }
+    
 }
