@@ -15,13 +15,14 @@ public class Ogro {
     int damage;
     boolean MBoost;
     int boost;
+    Jugador j = new Jugador();
     void Ogro(){
         this.vida = 100;
         this.damage = 20;
         this.boost = 0;
     }
     
-    int calcularDamage(){
+    void calcularDamage(){
         if(MBoost==true)
         {
             boost=10;
@@ -33,16 +34,35 @@ public class Ogro {
         
         int damageF = 0;
         int critico = (int) Math.random() * 11;
+        int vJ=0;
         if(critico==10){
             damageF = (int) (((damage * (0.6 + Math.random() * (1.4 - 0.6))) + (boost)) * 2);
+            vJ=(j.getVida())-damageF;
+            if(vJ<0)
+            {
+                vJ=0;
+            }
+            j.setVida(vJ);
         }
         if(critico==1){
             damageF = (int) (((damage * (0.6 + Math.random() * (1.4 - 0.6))) + (boost)) / 2);
+            vJ=(j.getVida())-damageF;
+            if(vJ<0)
+            {
+                vJ=0;
+            }
+            j.setVida(vJ);
         }
         else{
             damageF = (int) ((damage * (0.6 + Math.random() * (1.4 - 0.6))) + (boost));
+            vJ=(j.getVida())-damageF;
+            if(vJ<0)
+            {
+                vJ=0;
+            }
+            j.setVida(vJ);
         }
-        return damageF;
+        
     }
     
 //********************GETTERS***********************
