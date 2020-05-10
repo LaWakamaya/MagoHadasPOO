@@ -13,8 +13,8 @@ public class Ogro {
     
     int vida;
     int damage;
+    boolean MBoost;
     int boost;
-    
     void Ogro(){
         this.vida = 100;
         this.damage = 20;
@@ -22,6 +22,15 @@ public class Ogro {
     }
     
     int calcularDamage(){
+        if(MBoost==true)
+        {
+            boost=10;
+        }
+        else
+        {
+            boost=0;
+        }
+        
         int damageF = 0;
         int critico = (int) Math.random() * 11;
         if(critico==10){
@@ -35,4 +44,25 @@ public class Ogro {
         }
         return damageF;
     }
+    
+//********************GETTERS***********************
+
+    public int getVida() {
+        return vida;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+//*******************SETTERS***********************
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+    
 }

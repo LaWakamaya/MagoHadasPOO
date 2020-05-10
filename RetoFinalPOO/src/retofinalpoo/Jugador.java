@@ -39,4 +39,48 @@ public class Jugador {
         }
         return damageF;
     }
+//**************************GETTERS**********************************
+    public int getVida() {
+        return vida;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public int getHadasInv() {
+        return hadasInv;
+    }
+
+    public int getHadasResc() {
+        return hadasResc;
+    }
+
+    public int getPoderHadas() {
+        return poderHadas;
+    }
+
+//**********************SETTERS**************************************
+
+    public void setVida(int vida) {
+        this.vida = vida;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public void setHadasInv(int hadasInv) {
+        this.hadasInv = hadasInv;
+    }
+
+    public void setHadasResc(int hadasResc) {
+        this.hadasResc = hadasResc;
+    }
+
+    public void setPoderHadas(int poderHadas) {
+        this.poderHadas = poderHadas;
+    }
+    
+    
 }
