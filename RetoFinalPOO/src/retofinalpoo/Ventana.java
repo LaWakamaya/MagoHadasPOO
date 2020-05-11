@@ -137,7 +137,7 @@ public class Ventana extends JFrame implements ActionListener{
             texto.setText("El mago revivira al ogro");
             revivirOgro = true;
         }
-        
+        poderMago.setText(""+mago1.getHadasRobadas());
     }
 //******************BOTONES DE LA BATALLA PRINCIPAL********************************
     private void componentesJuego(){
@@ -190,7 +190,7 @@ public class Ventana extends JFrame implements ActionListener{
         casasHadas.setOpaque(true);
         panelJuego.add(casasHadas);
         
-        poderMago = new JLabel(""+mago1.hadasRobadas);
+        poderMago = new JLabel(""+mago1.getHadasRobadas());
         poderMago.setBounds(350, 20, 50, 50);
         poderMago.setOpaque(true);
         panelJuego.add(poderMago);
@@ -402,13 +402,14 @@ public class Ventana extends JFrame implements ActionListener{
                     {
                         jugador1.setHadasResc(jugador1.getHadasResc()+1);
                         jugador1.setHadasInv(jugador1.getHadasInv()-1);
+                        mago1.setHadasRobadas(mago1.getHadasRobadas()-1);
                     }
                     
                 }
                 casasHadas.setText(""+jugador1.getHadasResc()+"/"+casasCompletas);
                 hInv.setText(""+jugador1.hadasInv);
-                mago1.setHadasRobadas(mago1.getHadasRobadas()-jugador1.getHadasResc());
-                poderMago.setText(""+mago1.hadasRobadas);
+                //mago1.setHadasRobadas(mago1.getHadasRobadas()-jugador1.getHadasResc());
+                poderMago.setText(""+mago1.getHadasRobadas());
             }
             
             turnoMago();
