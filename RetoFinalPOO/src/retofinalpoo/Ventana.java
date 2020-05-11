@@ -883,7 +883,7 @@ public class Ventana extends JFrame implements ActionListener{
         {
             if(hadasInv!=5)
             {
-                hadasInv++;
+                return 1;
             }
             
         }
@@ -891,11 +891,11 @@ public class Ventana extends JFrame implements ActionListener{
         {
             if(hadasInv>=4)
             {
-                hadasInv=5;
+                return 5;
             }
             else
             {
-                hadasInv+=2;
+                return 2;
             }
             
         }
@@ -903,11 +903,11 @@ public class Ventana extends JFrame implements ActionListener{
         {
             if(hadasInv>=3)
             {
-                hadasInv=5;
+                return 5;
             }
             else
             {
-                hadasInv+=3;
+                return 3;
             }
             
         }
@@ -917,17 +917,14 @@ public class Ventana extends JFrame implements ActionListener{
             barra=0;
             
         }
-        else
-        {
-                
-        }
+        
         
         
         System.out.println(barra);
         System.out.println("ejecucion");
                     
             
-        return hadasInv;
+        return 0;
             
     } 
      
