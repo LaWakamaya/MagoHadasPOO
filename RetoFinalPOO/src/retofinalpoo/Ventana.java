@@ -19,6 +19,8 @@ import static javax.swing.JFrame.EXIT_ON_CLOSE;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 /**
@@ -33,8 +35,8 @@ public class Ventana extends JFrame implements ActionListener{
     
     private boolean ogroDead = false, revivirOgro = false;
     
-    private JButton atacar, bloquear, rescatar, contruir, vidajmas, vidajmenos, atacarMago, atacarOgro;
-    private JLabel texto,timer,hadasRes;
+    private JButton atacar, bloquear, rescatar, contruir, atacarMago, atacarOgro;
+    private JLabel texto,timer,hadasRes,contadorCasas,contadorError,casasHadas,poderMago,hInv;
     private JPanel mainPanel, panelJuego, panelRescatar, panelConstruir;
     
     public int VIDA1 = 0;
@@ -46,6 +48,17 @@ public class Ventana extends JFrame implements ActionListener{
     private int contador=0;
     private int barra=0;
     private boolean rescate=false;
+    
+    private int contadorC=0;
+    private int exitoC=0,falloC=0;
+    private int segundos=1000;
+    private boolean b1=false,b2=false,b3=false,b4=false,b5=false,b6=false,b7=false,b8=false,b9=false,b10=false,b11=false,b12=false,b13=false,b14=false,b15=false,b16=false;
+    private int casasConstruidas=0,errores=0;
+    private int acumulacionCasa=0;
+    
+    private int casasCompletas=0;
+    private int hadasAux=0;
+    private int invAux1=0,invAux2=0;
     
     public Ventana(){
         inicioComponentes();
@@ -172,6 +185,21 @@ public class Ventana extends JFrame implements ActionListener{
         texto.setOpaque(true);
         panelJuego.add(texto);
         
+        casasHadas = new JLabel(""+jugador1.hadasResc+"/"+casasCompletas);
+        casasHadas.setBounds(300, 20, 50, 50);
+        casasHadas.setOpaque(true);
+        panelJuego.add(casasHadas);
+        
+        poderMago = new JLabel(""+mago1.hadasRobadas);
+        poderMago.setBounds(350, 20, 50, 50);
+        poderMago.setOpaque(true);
+        panelJuego.add(poderMago);
+        
+        hInv = new JLabel(""+jugador1.hadasInv);
+        hInv.setBounds(50, 250, 50, 50);
+        hInv.setOpaque(true);
+        panelJuego.add(hInv);
+        
         
         
         
@@ -204,6 +232,16 @@ public class Ventana extends JFrame implements ActionListener{
         timer.setBounds(600, 50, 100, 50);
         timer.setOpaque(true);
         panelConstruir.add(timer);
+        
+        contadorCasas = new JLabel(""+casasConstruidas+"/5");
+        contadorCasas.setBounds(600, 100, 100, 50);
+        contadorCasas.setOpaque(true);
+        panelConstruir.add(contadorCasas);
+        
+        contadorError = new JLabel(""+errores+"/2");
+        contadorError.setBounds(600, 150, 100, 50);
+        contadorError.setOpaque(true);
+        panelConstruir.add(contadorError);
         
         construirCasa = new JButton("Construir!");
         construirCasa.setBounds(350, 390, 100, 50);
@@ -355,6 +393,20 @@ public class Ventana extends JFrame implements ActionListener{
             atacarMago.setVisible(false);
             atacarOgro.setVisible(false);
             jugador1.setBloqueando(true);
+            
+            if(casasCompletas!=jugador1.getHadasResc())
+            {
+                hadasAux=(casasCompletas-jugador1.getHadasResc());
+                for (int i = 0; i < hadasAux; i++) {
+                    jugador1.setHadasResc(jugador1.getHadasResc()+1);
+                    jugador1.setHadasInv(jugador1.getHadasInv()-1);
+                }
+                casasHadas.setText(""+jugador1.getHadasResc()+"/"+casasCompletas);
+                hInv.setText(""+jugador1.hadasInv);
+                mago1.setHadasRobadas(mago1.getHadasRobadas()-jugador1.getHadasResc());
+                poderMago.setText(""+mago1.hadasRobadas);
+            }
+            
             turnoMago();
             repaint();
         }
@@ -393,12 +445,291 @@ public class Ventana extends JFrame implements ActionListener{
           if(contador==1)
           {
               System.out.println(minijuegoHada(getBarra(),jugador1.getHadasInv())+" hadas rescatadas");
+              invAux1=5-jugador1.getHadasInv();
+              invAux2=minijuegoHada(getBarra(),jugador1.getHadasInv());
+              for (int i = 0; i < invAux1; i++) 
+              {
+                  if(invAux2==0)
+                  {
+                      break;
+                  }
+                  else
+                  {
+                      invAux2--;
+                      jugador1.setHadasInv(jugador1.getHadasInv()+1);
+                  }
+              }
+                  
               hadasRes.setText("                                            Haz rescatado "+ minijuegoHada(getBarra(),jugador1.getHadasInv())+ " hadas");
+              
+              
+              
           }
           contador++;  
             
         }
         
+        if(e.getSource()==construirCasa)
+        {
+            
+            contadorC++;
+            construirCasa.setEnabled(false);
+            construirCasa.setBackground(Color.gray);
+            minijuegoCasa();
+        }
+        
+        if(e.getSource()==boton1)
+        {
+           if(b1==true)
+           {
+               boton1.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+           else
+           {
+               boton1.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton1.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton2)
+        {
+           if(b2==true)
+           {
+               boton2.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+           else
+           {
+               boton2.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton2.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton3)
+        {
+           if(b3==true)
+           {
+               boton3.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+           else
+           {
+               boton3.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton3.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton4)
+        {
+           if(b4==true)
+           {
+               boton4.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+           else
+           {
+               boton4.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton4.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton5)
+        {
+           if(b5==true)
+           {
+               boton5.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+           else
+           {
+               boton5.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton5.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton6)
+        {
+           if(b6==true)
+           {
+               boton6.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+           else
+           {
+               boton6.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton6.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton7)
+        {
+           if(b7==true)
+           {
+               boton7.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+           else
+           {
+               boton7.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton7.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton8)
+        {
+            if(b8==true)
+           {
+               boton8.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+            else
+           {
+               boton8.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+            boton8.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton9)
+        {
+            if(b9==true)
+           {
+               boton9.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+            else
+           {
+               boton9.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+            boton9.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton10)
+        {
+            if(b10==true)
+           {
+               boton10.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+            else
+           {
+               boton10.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+            boton10.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton11)
+        {
+           if(b11==true)
+           {
+               boton11.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+           else
+           {
+               boton11.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton11.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton12)
+        {
+           if(b12==true)
+           {
+               boton12.setBackground(Color.blue);
+               acumulacionCasa++;
+           }
+           else
+           {
+               boton12.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton12.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton13)
+        {
+           if(b13==true)
+           {
+               boton13.setBackground(Color.blue);
+               acumulacionCasa++;
+           }else
+           {
+               boton13.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton13.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton14)
+        {
+            if(b14==true)
+           {
+               boton14.setBackground(Color.blue);
+               acumulacionCasa++;
+           }else
+           {
+               boton14.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton14.setEnabled(false); 
+        }
+        
+        if(e.getSource()==boton15)
+        {
+           if(b15==true)
+           {
+               boton15.setBackground(Color.blue);
+               acumulacionCasa++;
+           }else
+           {
+               boton15.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton15.setEnabled(false);
+        }
+        
+        if(e.getSource()==boton16)
+        {
+           if(b16==true)
+           {
+               
+               boton16.setBackground(Color.blue);
+               acumulacionCasa++;
+           }else
+           {
+               boton16.setBackground(Color.red);
+               errores++;
+               contadorError.setText(""+errores+"/2");
+           }
+           boton16.setEnabled(false);
+        }
         
         if(e.getSource()==volverPanel1){
             panelJuego.setEnabled(true);
@@ -407,6 +738,7 @@ public class Ventana extends JFrame implements ActionListener{
             panelRescatar.setVisible(false);
             repaint();
             hadasRes.setText("                             Presiona el boton para iniciar el rescate");
+            hInv.setText((""+jugador1.hadasInv));
             contador=0;
             barra=0;
         }
@@ -416,6 +748,17 @@ public class Ventana extends JFrame implements ActionListener{
             panelJuego.setVisible(true);
             panelConstruir.setEnabled(false);
             panelConstruir.setVisible(false);
+            casasCompletas+=casasConstruidas;
+            casasHadas.setText(""+jugador1.hadasResc+"/"+casasCompletas);
+            contadorC=0;
+            construirCasa.setEnabled(true);
+            construirCasa.setBackground(Color.white);
+            segundos=10000;
+            refresh();
+            casasConstruidas=0;
+            errores=0;
+            contadorCasas.setText(""+casasConstruidas+"/5");
+            contadorError.setText(""+errores+"/2");
             repaint();
         }
     }
@@ -459,7 +802,7 @@ public class Ventana extends JFrame implements ActionListener{
                 if(contador==1)
                 {
                     
-                        
+                  
                try {
                    hadasRes.setText("");
                    barra++;
@@ -483,8 +826,42 @@ public class Ventana extends JFrame implements ActionListener{
        }
        if(panelConstruir.isEnabled())
        {
+           if(contadorC==1&&segundos!=0&&casasConstruidas!=5&&errores!=2)
+                {
+                    
+                        
+               try {
+                   timer.setText(""+(segundos-1));
+                   segundos--;
+                   if(acumulacionCasa==5)
+                   {
+                       casasConstruidas++;
+                       segundos=10000;
+                       acumulacionCasa=0;
+                       contadorCasas.setText(""+casasConstruidas+"/5");
+                       
+                       refresh();
+                       minijuegoCasa();
+                       
+                   }
+                   
+                   System.out.println(casasCompletas);
+                   Thread.sleep(10);
+               } catch (InterruptedException ex) {
+                   Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+               }
+                    
+                    
+                }
+           if(errores==2)
+           {
+               defresh();
+           }
            
+                
+                repaint();
        }
+       
        
        
         
@@ -552,13 +929,169 @@ public class Ventana extends JFrame implements ActionListener{
             
         return hadasInv;
             
-    }
-    
-     
-     
-     
-     
+    } 
      
 ///////////////MINIJUEGO CASAS//////////////////////////////////////
+     public void minijuegoCasa()
+    {
+///////////////GENERADOR DE NUMEROS ALEATORIOS UNICOS////////////////////    
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for (int i=1; i<17; i++) {
+            list.add(new Integer(i));
+        }
+        Collections.shuffle(list);
+        for (int i=0; i<5; i++) {
+            iluminacionB(list.get(i));
+            repaint();
+        }
+        
+    }
      
+     public void iluminacionB(int iluminar)
+     {
+         switch(iluminar)
+         {
+             case 1:
+                 boton1.setBackground(Color.green);
+                 b1=true;
+                 
+                 break;
+             case 2:
+                 boton2.setBackground(Color.green);
+                 b2=true;
+                 break;
+             case 3:
+                 boton3.setBackground(Color.green);
+                 b3=true;
+                 break;
+             case 4:
+                 boton4.setBackground(Color.green);
+                 b4=true;
+                 break;   
+             case 5:
+                 boton5.setBackground(Color.green);
+                 b5=true;
+                 break;
+             case 6:
+                 boton6.setBackground(Color.green);
+                 b6=true;
+                 break;
+             case 7:
+                 boton7.setBackground(Color.green);
+                 b7=true;
+                 break;
+             case 8:
+                 boton8.setBackground(Color.green);
+                 b8=true;
+                 break;
+             case 9:
+                 boton9.setBackground(Color.green);
+                 b9=true;
+                 break;
+             case 10:
+                 boton10.setBackground(Color.green);
+                 b10=true;
+                 break;
+             case 11:
+                 boton11.setBackground(Color.green);
+                 b11=true;
+                 break;
+             case 12:
+                 boton12.setBackground(Color.green);
+                 b12=true;
+                 break;   
+             case 13:
+                 boton13.setBackground(Color.green);
+                 b13=true;
+                 break;
+             case 14:
+                 boton14.setBackground(Color.green);
+                 b14=true;
+                 break;
+             case 15:
+                 boton15.setBackground(Color.green);
+                 b15=true;
+                 break;
+             case 16:
+                 boton16.setBackground(Color.green);
+                 b16=true;
+                 break; 
+         }
+                 
+     }
+     
+     public void refresh(){
+         boton1.setEnabled(true);
+         boton1.setBackground(Color.white);
+         boton2.setEnabled(true);
+         boton2.setBackground(Color.white);
+         boton3.setEnabled(true);
+         boton3.setBackground(Color.white);
+         boton4.setEnabled(true);
+         boton4.setBackground(Color.white);
+         boton5.setEnabled(true);
+         boton5.setBackground(Color.white);
+         boton6.setEnabled(true);
+         boton6.setBackground(Color.white);
+         boton7.setEnabled(true);
+         boton7.setBackground(Color.white);
+         boton8.setEnabled(true);
+         boton8.setBackground(Color.white);
+         boton9.setEnabled(true);
+         boton9.setBackground(Color.white);
+         boton10.setEnabled(true);
+         boton10.setBackground(Color.white);
+         boton11.setEnabled(true);
+         boton11.setBackground(Color.white);
+         boton12.setEnabled(true);
+         boton12.setBackground(Color.white);
+         boton13.setEnabled(true);
+         boton13.setBackground(Color.white);
+         boton14.setEnabled(true);
+         boton14.setBackground(Color.white);
+         boton15.setEnabled(true);
+         boton15.setBackground(Color.white);
+         boton16.setEnabled(true);
+         boton16.setBackground(Color.white);
+         b1=false;
+         b2=false;
+         b3=false;
+         b4=false;
+         b5=false;
+         b6=false;
+         b7=false;
+         b8=false;
+         b9=false;
+         b10=false;
+         b11=false;
+         b12=false;
+         b13=false;
+         b14=false;
+         b15=false;
+         b16=false;
+         acumulacionCasa=0;
+         
+         
+         
+     }
+         
+     public void defresh(){
+         boton1.setEnabled(false);
+         boton2.setEnabled(false);
+         boton3.setEnabled(false);
+         boton4.setEnabled(false);
+         boton5.setEnabled(false);
+         boton6.setEnabled(false);
+         boton7.setEnabled(false);
+         boton8.setEnabled(false);
+         boton9.setEnabled(false);
+         boton10.setEnabled(false);
+         boton11.setEnabled(false);
+         boton12.setEnabled(false);
+         boton13.setEnabled(false);
+         boton14.setEnabled(false);
+         boton15.setEnabled(false);
+         boton16.setEnabled(false);
+         
+     }
 }
