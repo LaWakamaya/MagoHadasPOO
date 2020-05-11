@@ -398,8 +398,12 @@ public class Ventana extends JFrame implements ActionListener{
             {
                 hadasAux=(casasCompletas-jugador1.getHadasResc());
                 for (int i = 0; i < hadasAux; i++) {
-                    jugador1.setHadasResc(jugador1.getHadasResc()+1);
-                    jugador1.setHadasInv(jugador1.getHadasInv()-1);
+                    if(jugador1.getHadasInv()!=0)
+                    {
+                        jugador1.setHadasResc(jugador1.getHadasResc()+1);
+                        jugador1.setHadasInv(jugador1.getHadasInv()-1);
+                    }
+                    
                 }
                 casasHadas.setText(""+jugador1.getHadasResc()+"/"+casasCompletas);
                 hInv.setText(""+jugador1.hadasInv);
