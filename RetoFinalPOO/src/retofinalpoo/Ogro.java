@@ -36,15 +36,18 @@ public class Ogro {
     public int calcularDamage(){
         
         int damageF = 0;
-        int critico = ThreadLocalRandom.current().nextInt(1, 10 + 1);
-        if(critico==10){
-            damageF = (int) (((damage * (0.6 + Math.random() * (1.4 - 0.6))) + (boost)) * 2);
+        int critico = ThreadLocalRandom.current().nextInt(1, 100 + 1);
+        if(critico>=90){
+            //damageF = (int) (((damage * (0.6 + Math.random() * (1.4 - 0.6))) + (boost)) * 2);
+            damageF = (this.damage + this.boost) * 2;
         }
-        if(critico==1){
-            damageF = (int) (((damage * (0.6 + Math.random() * (1.4 - 0.6))) + (boost)) / 2);
+        if(critico<=10){
+            //damageF = (int) (((damage * (0.6 + Math.random() * (1.4 - 0.6))) + (boost)) / 2);
+            damageF = (this.damage + this.boost) / 2;
         }
         else{
-            damageF = (int) ((damage * (0.6 + Math.random() * (1.4 - 0.6))) + (boost));
+            //damageF = (int) ((damage * (0.6 + Math.random() * (1.4 - 0.6))) + (boost));
+            damageF = (this.damage + this.boost);
         }
         return damageF;
     }

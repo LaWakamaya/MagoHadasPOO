@@ -41,6 +41,7 @@ public class Ventana extends JFrame implements ActionListener{
     
     public int VIDA1 = 0;
     
+    public int curarJugador = 0;
     private JButton volverPanel1, rescatarHadas;
     
     private JButton volverPanel2, boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8, boton9, boton10, boton11, boton12, boton13, boton14, boton15, boton16, construirCasa;
@@ -125,6 +126,7 @@ public class Ventana extends JFrame implements ActionListener{
             if(turnoM == 4){
                 texto.setText("Mago roba hadas");
                 mago1.robarHadas(jugador1);
+                hInv.setText(""+jugador1.hadasInv);
             }
         }
         if(revivirOgro){
@@ -404,6 +406,12 @@ public class Ventana extends JFrame implements ActionListener{
                         jugador1.setHadasInv(jugador1.getHadasInv()-1);
                         mago1.setHadasRobadas(mago1.getHadasRobadas()-1);
                         jugador1.setPoderHadas(jugador1.getHadasResc()/10);
+                        
+                        curarJugador = curarJugador + 1;
+                        if(curarJugador==10){
+                            jugador1.setVida(jugador1.getVidaMax());
+                            curarJugador = 0;
+                        }
                     }
                     
                 }
@@ -411,6 +419,7 @@ public class Ventana extends JFrame implements ActionListener{
                 hInv.setText(""+jugador1.hadasInv);
                 //mago1.setHadasRobadas(mago1.getHadasRobadas()-jugador1.getHadasResc());
                 poderMago.setText(""+mago1.getHadasRobadas());
+                mago1.calcularPoder();
             }
             
             turnoMago();
@@ -466,6 +475,7 @@ public class Ventana extends JFrame implements ActionListener{
                   }
               }
                   
+              //hadasRes.setText("                                            Haz rescatado "+ minijuegoHada(getBarra(),jugador1.getHadasInv())+ " hadas");
               hadasRes.setText("                                            Haz rescatado "+ minijuegoHada(getBarra(),jugador1.getHadasInv())+ " hadas");
               
               
@@ -866,6 +876,11 @@ public class Ventana extends JFrame implements ActionListener{
            
                 
                 repaint();
+                
+                if(segundos==0||casasConstruidas==5||errores==2)
+                {
+                    refresh();
+                }
        }
        
        

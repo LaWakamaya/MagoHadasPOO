@@ -13,7 +13,7 @@ public class Mago {
     
     int vidamax=100;
     int vida=100;
-    int hadasRobadas=100;
+    int hadasRobadas=60;
     int poder=hadasRobadas/10;
     
     
@@ -30,9 +30,12 @@ public class Mago {
         
         int hadasActual;
         int hadasRob;
-        int robo = ThreadLocalRandom.current().nextInt(1, 5 + 1);
+        int robo = ThreadLocalRandom.current().nextInt(1, 2 + 1);
         int aumentoP;
         hadasActual=j.getHadasInv();
+        if(hadasActual<robo){
+            robo = hadasActual;
+        }
         hadasRob=hadasActual-robo;
         if(hadasRob<0)
         {
@@ -42,8 +45,12 @@ public class Mago {
         aumentoP=getHadasRobadas();
         aumentoP=aumentoP+robo;
         setHadasRobadas(aumentoP);
-        this.poder = (int) (Math.floor(hadasRobadas/10));
+        calcularPoder();
     }           
+    
+    public void calcularPoder(){
+        this.poder = (int) (Math.floor(hadasRobadas/10));
+    }
 
     public void curarOgro(Ogro o)
     {
@@ -70,8 +77,10 @@ public class Mago {
     }
     
     public void recibirDamage(int dano){
-        float coefDano = (10-this.poder)/10;
-        this.vida =  (this.vida - ((int) (dano * coefDano)));
+        //float coefDano = (10-this.poder)/10;
+        //this.vida = (int) (this.vida - ((dano * coefDano)));
+        //this.vida = this.vida - dano;
+        this.vida = this.vida - (dano/this.poder);
     }
 
 

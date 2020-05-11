@@ -36,20 +36,23 @@ public class Jugador {
         int damageF = 0;
         int critico = ThreadLocalRandom.current().nextInt(1, 10 + 1);
         if(critico==10){
-            damageF = (int) (((this.damage * (0.8 + Math.random() * (1.2 - 0.8))) + (this.damage * (0.3 * this.poderHadas))) * 2);
+            //damageF = (int) (((this.damage * (0.8 + Math.random() * (1.2 - 0.8))) + (this.damage * (0.3 * this.poderHadas))) * 2);
+            damageF = (this.damage + (this.damage * (int) (0.3*this.poderHadas))) * 2;
         }
         if(critico==1){
-            damageF = (int) (((this.damage * (0.8 + Math.random() * (1.2 - 0.8))) + (this.damage * (0.3 * this.poderHadas))) / 2);
+            //damageF = (int) (((this.damage * (0.8 + Math.random() * (1.2 - 0.8))) + (this.damage * (0.3 * this.poderHadas))) / 2);
+            damageF = (this.damage + (this.damage * (int) (0.3*this.poderHadas))) / 2;
         }
         else{
-            damageF = (int) ((this.damage * (0.8 + Math.random() * (1.2 - 0.8))) + (this.damage * (0.3 * this.poderHadas))) ;
+            //damageF = (int) ((this.damage * (0.8 + Math.random() * (1.2 - 0.8))) + (this.damage * (0.3 * this.poderHadas))) ;
+            damageF = (this.damage + (this.damage * (int) (0.3*this.poderHadas)));
         }
         return damageF;
     }
     
     public void recibirDamage(int dano){
         if(bloqueando){
-            this.vida = (this.vida - dano)/2;
+            this.vida = (this.vida - (dano/2));
             this.bloqueando = false;
         }else{
             this.vida = (this.vida - dano);
