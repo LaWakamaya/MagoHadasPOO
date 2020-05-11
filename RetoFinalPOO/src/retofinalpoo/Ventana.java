@@ -403,7 +403,7 @@ public class Ventana extends JFrame implements ActionListener{
                         jugador1.setHadasResc(jugador1.getHadasResc()+1);
                         jugador1.setHadasInv(jugador1.getHadasInv()-1);
                         mago1.setHadasRobadas(mago1.getHadasRobadas()-1);
-                        jugador1.setPoderHadas(jugador1.getHadasResc()*10);
+                        jugador1.setPoderHadas(jugador1.getHadasResc()/10);
                     }
                     
                 }
