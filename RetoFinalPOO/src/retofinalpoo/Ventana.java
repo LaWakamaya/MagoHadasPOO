@@ -37,7 +37,7 @@ public class Ventana extends JFrame implements ActionListener{
     
     private JButton atacar, bloquear, rescatar, contruir, atacarMago, atacarOgro;
     private JLabel texto,timer,hadasRes,contadorCasas,contadorError,casasHadas,poderMago,hInv;
-    private JPanel mainPanel, panelJuego, panelRescatar, panelConstruir;
+    private JPanel mainPanel, panelJuego, panelRescatar, panelConstruir, panelVictoria, panelDerrota;
     
     public int VIDA1 = 0;
     
@@ -100,6 +100,24 @@ public class Ventana extends JFrame implements ActionListener{
         panelJuego.setEnabled(true);
         panelJuego.setVisible(true);
         
+        //************************PANEL DE PANTALLA DE VICTORIA*****************************    
+        panelVictoria = new JPanel();
+        panelVictoria.setBackground(Color.cyan);
+        panelVictoria.setLayout(null);
+        componentesConstruir();
+        mainPanel.add(panelVictoria);
+        panelVictoria.setEnabled(false);
+        panelVictoria.setVisible(false);
+        
+        //************************PANEL DE PANTALLA DE DERROTA*****************************    
+        panelDerrota = new JPanel();
+        panelDerrota.setBackground(Color.red);
+        panelDerrota.setLayout(null);
+        componentesConstruir();
+        mainPanel.add(panelDerrota);
+        panelDerrota.setEnabled(false);
+        panelDerrota.setVisible(false);
+        
         inicioJuego();
     }
     
@@ -114,6 +132,12 @@ public class Ventana extends JFrame implements ActionListener{
             if(turnoM == 1){
                 texto.setText("Ogro ataca");
                 jugador1.recibirDamage(ogro1.calcularDamage());
+                if(jugador1.getVida()<=0){
+                    panelJuego.setEnabled(false);
+                    panelJuego.setVisible(false);
+                    panelDerrota.setEnabled(true);
+                    panelDerrota.setVisible(true);
+                }
             }
             if(turnoM == 2){
                 texto.setText("Mago cura ogro");
@@ -372,6 +396,12 @@ public class Ventana extends JFrame implements ActionListener{
             texto.setText("Mago: "+mago1.getVida()+"/"+mago1.getVidaMax());
             atacarMago.setVisible(false);
             atacarOgro.setVisible(false);
+            if(mago1.getVida()<=0){
+                panelJuego.setEnabled(false);
+                panelJuego.setVisible(false);
+                panelVictoria.setEnabled(true);
+                panelVictoria.setVisible(true);
+            }
             turnoMago();
             repaint();
         }
