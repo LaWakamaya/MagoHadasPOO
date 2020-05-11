@@ -37,7 +37,7 @@ public class Ventana extends JFrame implements ActionListener{
     
     private JButton atacar, bloquear, rescatar, contruir, atacarMago, atacarOgro;
     private JLabel texto,timer,hadasRes,contadorCasas,contadorError,casasHadas,poderMago,hInv;
-    private JPanel mainPanel, panelJuego, panelRescatar, panelConstruir, panelVictoria, panelDerrota;
+    private JPanel mainPanel, panelJuego, panelRescatar, panelConstruir, panelVictoria, panelDerrota, panelMenu;
     
     public int VIDA1 = 0;
     
@@ -45,6 +45,8 @@ public class Ventana extends JFrame implements ActionListener{
     private JButton volverPanel1, rescatarHadas;
     
     private JButton volverPanel2, boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8, boton9, boton10, boton11, boton12, boton13, boton14, boton15, boton16, construirCasa;
+    
+    private JButton botonMJugar, botonMInstrucciones, botonMSalir;
     
     private int contador=0;
     private int barra=0;
@@ -97,14 +99,14 @@ public class Ventana extends JFrame implements ActionListener{
         panelJuego.setLayout(null);
         componentesJuego();
         mainPanel.add(panelJuego);
-        panelJuego.setEnabled(true);
-        panelJuego.setVisible(true);
+        panelJuego.setEnabled(false);
+        panelJuego.setVisible(false);
         
         //************************PANEL DE PANTALLA DE VICTORIA*****************************    
         panelVictoria = new JPanel();
         panelVictoria.setBackground(Color.cyan);
         panelVictoria.setLayout(null);
-        componentesConstruir();
+        componentesVictoria();
         mainPanel.add(panelVictoria);
         panelVictoria.setEnabled(false);
         panelVictoria.setVisible(false);
@@ -113,18 +115,22 @@ public class Ventana extends JFrame implements ActionListener{
         panelDerrota = new JPanel();
         panelDerrota.setBackground(Color.red);
         panelDerrota.setLayout(null);
-        componentesConstruir();
+        componentesDerrota();
         mainPanel.add(panelDerrota);
         panelDerrota.setEnabled(false);
         panelDerrota.setVisible(false);
         
-        inicioJuego();
+        //************************PANEL DEL MENU PRINCIPAL*****************************    
+        panelMenu = new JPanel();
+        panelMenu.setBackground(Color.white);
+        panelMenu.setLayout(null);
+        mainMenu();
+        mainPanel.add(panelMenu);
+        panelMenu.setEnabled(true);
+        panelMenu.setVisible(true);
+        
     }
     
-    private void inicioJuego(){
-        
-        
-    }
     //**************TURNO DEL MAGO*******************
     private void turnoMago(){
         if(!ogroDead){
@@ -137,6 +143,7 @@ public class Ventana extends JFrame implements ActionListener{
                     panelJuego.setVisible(false);
                     panelDerrota.setEnabled(true);
                     panelDerrota.setVisible(true);
+                    
                 }
             }
             if(turnoM == 2){
@@ -228,6 +235,38 @@ public class Ventana extends JFrame implements ActionListener{
         
         
         
+        
+    }
+    
+    //******************************PANTALLA DEL MENU PRINCIPAL**********************
+    private void mainMenu(){
+        
+        botonMJugar = new JButton("Jugar");
+        botonMJugar.setBounds(325, 250, 150, 50);
+        botonMJugar.setBackground(Color.white);
+        botonMJugar.addActionListener(this);
+        panelMenu.add(botonMJugar);
+        
+        botonMInstrucciones = new JButton("Instrucciones");
+        botonMInstrucciones.setBounds(325, 320, 150, 50);
+        botonMInstrucciones.setBackground(Color.white);
+        botonMInstrucciones.addActionListener(this);
+        panelMenu.add(botonMInstrucciones);
+        
+        botonMSalir = new JButton("Salir");
+        botonMSalir.setBounds(325, 390, 150, 50);
+        botonMSalir.setBackground(Color.white);
+        botonMSalir.addActionListener(this);
+        panelMenu.add(botonMSalir);
+    }
+    
+    //******************************PANTALLA DE VICTORIA**********************
+    private void componentesVictoria(){
+        
+    }
+    
+    //******************************PANTALLA DE DERROTA**********************
+    private void componentesDerrota(){
         
     }
 //******************************BOTONES DEL RESCATE DE LA HADA**********************
@@ -522,6 +561,20 @@ public class Ventana extends JFrame implements ActionListener{
             construirCasa.setEnabled(false);
             construirCasa.setBackground(Color.gray);
             minijuegoCasa();
+        }
+        
+        if(e.getSource()==botonMJugar)
+        {
+            panelMenu.setEnabled(false);
+            panelMenu.setVisible(false);
+            panelJuego.setEnabled(true);
+            panelJuego.setVisible(true);
+            repaint();
+        }
+        
+        if(e.getSource()==botonMSalir)
+        {
+            this.dispose();
         }
         
         if(e.getSource()==boton1)
