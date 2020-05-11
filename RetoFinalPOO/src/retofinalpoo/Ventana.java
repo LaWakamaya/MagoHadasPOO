@@ -8,6 +8,7 @@ package retofinalpoo;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.ThreadLocalRandom;
@@ -21,6 +22,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.util.ArrayList;
 import java.util.Collections;
+import javax.swing.ImageIcon;
+import java.applet.AudioClip;
 
 
 /**
@@ -47,6 +50,9 @@ public class Ventana extends JFrame implements ActionListener{
     private JButton volverPanel2, boton1, boton2, boton3, boton4, boton5, boton6, boton7, boton8, boton9, boton10, boton11, boton12, boton13, boton14, boton15, boton16, construirCasa;
     
     private JButton botonMJugar, botonMInstrucciones, botonMSalir;
+    private JLabel fondoMenu, tituloJuego;
+    
+    //ImageIcon fondo2 = new ImageIcon("fondoCastillo1.png");
     
     private int contador=0;
     private int barra=0;
@@ -175,63 +181,90 @@ public class Ventana extends JFrame implements ActionListener{
 //******************BOTONES DE LA BATALLA PRINCIPAL********************************
     private void componentesJuego(){
         
+        
+        
+        ImageIcon fondo2 = new ImageIcon("bosque2.jpg");
+        JLabel fondoJuego = new JLabel();
+        fondoJuego.setBounds(0, 0, 800, 500);
+        fondoJuego.setIcon(new ImageIcon(fondo2.getImage().getScaledInstance(800, 500, Image.SCALE_SMOOTH)));
+        panelJuego.add(fondoJuego);
+        
+        ImageIcon caballeroImg = new ImageIcon("caballero2.png");
+        JLabel caballero = new JLabel();
+        caballero.setBounds(80, 120, 170, 170);
+        caballero.setIcon(new ImageIcon(caballeroImg.getImage().getScaledInstance(170, 170, Image.SCALE_DEFAULT)));
+        fondoJuego.add(caballero);
+        
+        ImageIcon ogroImg = new ImageIcon("ogro1.png");
+        JLabel ogro = new JLabel();
+        ogro.setBounds(350, 80, 250, 250);
+        ogro.setIcon(new ImageIcon(ogroImg.getImage().getScaledInstance(250, 250, Image.SCALE_DEFAULT)));
+        fondoJuego.add(ogro);
+        
+        ImageIcon magoImg = new ImageIcon("mago1.png");
+        JLabel mago = new JLabel();
+        mago.setBounds(530, 100, 160, 220);
+        mago.setIcon(new ImageIcon(magoImg.getImage().getScaledInstance(160, 220, Image.SCALE_DEFAULT)));
+        fondoJuego.add(mago);
+        
+        //panelJuego.setb
         atacar = new JButton("Atacar");
-        atacar.setBounds(25, 380, 100, 50);
+        atacar.setBounds(26, 380, 176, 50);
         atacar.setBackground(Color.white);
         atacar.addActionListener(this);
-        panelJuego.add(atacar);
+        fondoJuego.add(atacar);
         
         bloquear = new JButton("Bloquear");
-        bloquear.setBounds(135, 380, 100, 50);
+        bloquear.setBounds(212, 380, 176, 50);
         bloquear.setBackground(Color.white);
         bloquear.addActionListener(this);
-        panelJuego.add(bloquear);
+        fondoJuego.add(bloquear);
         
         rescatar = new JButton("Rescatar");
-        rescatar.setBounds(245, 380, 100, 50);
+        rescatar.setBounds(398, 380, 176, 50);
         rescatar.setBackground(Color.white);
         rescatar.addActionListener(this);
-        panelJuego.add(rescatar);
+        fondoJuego.add(rescatar);
         
         contruir = new JButton("Construir");
-        contruir.setBounds(355, 380, 100, 50);
+        contruir.setBounds(584, 380, 176, 50);
         contruir.setBackground(Color.white);
         contruir.addActionListener(this);
-        panelJuego.add(contruir);
+        fondoJuego.add(contruir);
         
         atacarMago = new JButton("Mago");
         atacarMago.setBounds(570, 250, 100, 50);
         atacarMago.setBackground(Color.white);
         atacarMago.addActionListener(this);
-        panelJuego.add(atacarMago);
+        fondoJuego.add(atacarMago);
         atacarMago.setVisible(false);
         
         atacarOgro = new JButton("Ogro");
-        atacarOgro.setBounds(450, 250, 100, 50);
+        atacarOgro.setBounds(420, 250, 100, 50);
         atacarOgro.setBackground(Color.white);
         atacarOgro.addActionListener(this);
-        panelJuego.add(atacarOgro);
+        fondoJuego.add(atacarOgro);
         atacarOgro.setVisible(false);
         
-        texto = new JLabel("SAMPLE TEXT XD");
+        texto = new JLabel("Elije una accion");
         texto.setBounds(25, 320, 735, 50);
         texto.setOpaque(true);
-        panelJuego.add(texto);
+        fondoJuego.add(texto);
         
         casasHadas = new JLabel(""+jugador1.hadasResc+"/"+casasCompletas);
         casasHadas.setBounds(300, 20, 50, 50);
         casasHadas.setOpaque(true);
-        panelJuego.add(casasHadas);
+        fondoJuego.add(casasHadas);
         
         poderMago = new JLabel(""+mago1.getHadasRobadas());
         poderMago.setBounds(350, 20, 50, 50);
         poderMago.setOpaque(true);
-        panelJuego.add(poderMago);
+        fondoJuego.add(poderMago);
         
         hInv = new JLabel(""+jugador1.hadasInv);
         hInv.setBounds(50, 250, 50, 50);
         hInv.setOpaque(true);
-        panelJuego.add(hInv);
+        fondoJuego.add(hInv);
         
         
         
@@ -241,180 +274,212 @@ public class Ventana extends JFrame implements ActionListener{
     //******************************PANTALLA DEL MENU PRINCIPAL**********************
     private void mainMenu(){
         
+        //AudioClip musicaMenu = new java.applet.Applet.newAudioClip(getClass().getResource(""));
+        
+        ImageIcon fondo1 = new ImageIcon("fondoMenu2.png");
+        fondoMenu = new JLabel();
+        fondoMenu.setBounds(0, 0, 800, 500);
+        fondoMenu.setIcon(new ImageIcon(fondo1.getImage().getScaledInstance(800, 500, Image.SCALE_DEFAULT)));
+        panelMenu.add(fondoMenu);
+               
         botonMJugar = new JButton("Jugar");
         botonMJugar.setBounds(325, 250, 150, 50);
         botonMJugar.setBackground(Color.white);
         botonMJugar.addActionListener(this);
-        panelMenu.add(botonMJugar);
+        fondoMenu.add(botonMJugar);
         
         botonMInstrucciones = new JButton("Instrucciones");
         botonMInstrucciones.setBounds(325, 320, 150, 50);
         botonMInstrucciones.setBackground(Color.white);
         botonMInstrucciones.addActionListener(this);
-        panelMenu.add(botonMInstrucciones);
+        fondoMenu.add(botonMInstrucciones);
         
         botonMSalir = new JButton("Salir");
         botonMSalir.setBounds(325, 390, 150, 50);
         botonMSalir.setBackground(Color.white);
         botonMSalir.addActionListener(this);
-        panelMenu.add(botonMSalir);
+        fondoMenu.add(botonMSalir);
     }
     
     //******************************PANTALLA DE VICTORIA**********************
     private void componentesVictoria(){
+        
+        ImageIcon fondoVict = new ImageIcon("pantallaVictoria.png");
+        JLabel victoriaFond = new JLabel();
+        victoriaFond.setBounds(0, 0, 800, 500);
+        victoriaFond.setIcon(new ImageIcon(fondoVict.getImage().getScaledInstance(800, 500, Image.SCALE_DEFAULT)));
+        panelVictoria.add(victoriaFond);
         
     }
     
     //******************************PANTALLA DE DERROTA**********************
     private void componentesDerrota(){
         
+        ImageIcon fondoDer = new ImageIcon("pantallaDerrota.png");
+        JLabel derrotaFond = new JLabel();
+        derrotaFond.setBounds(0, 0, 800, 500);
+        derrotaFond.setIcon(new ImageIcon(fondoDer.getImage().getScaledInstance(800, 500, Image.SCALE_DEFAULT)));
+        panelDerrota.add(derrotaFond);
+        
     }
 //******************************BOTONES DEL RESCATE DE LA HADA**********************
     private void componentesRescatar(){
         
+        ImageIcon fondoResc = new ImageIcon("rescatar1.png");
+        JLabel rescatarFondo = new JLabel();
+        rescatarFondo.setBounds(0, 0, 800, 500);
+        rescatarFondo.setIcon(new ImageIcon(fondoResc.getImage().getScaledInstance(800, 500, Image.SCALE_DEFAULT)));
+        panelRescatar.add(rescatarFondo);
+        
         hadasRes = new JLabel("                             Presiona el boton para iniciar el rescate");
         hadasRes.setBounds(200, 250, 400, 50);
         hadasRes.setOpaque(true);
-        panelRescatar.add(hadasRes);
+        rescatarFondo.add(hadasRes);
         
-        volverPanel1 = new JButton("Panel 1");
+        volverPanel1 = new JButton("Volver");
         volverPanel1.setBounds(20, 20, 100, 50);
         volverPanel1.setBackground(Color.white);
         volverPanel1.addActionListener(this);
-        panelRescatar.add(volverPanel1);
+        rescatarFondo.add(volverPanel1);
         
         rescatarHadas = new JButton("Rescatar!");
         rescatarHadas.setBounds(350, 320, 100, 50);
         rescatarHadas.setBackground(Color.white);
         rescatarHadas.addActionListener(this);
-        panelRescatar.add(rescatarHadas);
+        rescatarFondo.add(rescatarHadas);
     
     }
 //******************************BOTONES DE LA CONSTRUCCION DE LA CASA**************** 
     private void componentesConstruir(){
         
+        ImageIcon fondoConst = new ImageIcon("pared1.png");
+        JLabel construirFondo = new JLabel();
+        construirFondo.setBounds(0, -10, 800, 500);
+        construirFondo.setIcon(new ImageIcon(fondoConst.getImage().getScaledInstance(800, 500, Image.SCALE_DEFAULT)));
+        panelConstruir.add(construirFondo);
+        
         timer = new JLabel("10");
         timer.setBounds(600, 50, 100, 50);
         timer.setOpaque(true);
-        panelConstruir.add(timer);
+        construirFondo.add(timer);
         
         contadorCasas = new JLabel(""+casasConstruidas+"/5");
         contadorCasas.setBounds(600, 100, 100, 50);
         contadorCasas.setOpaque(true);
-        panelConstruir.add(contadorCasas);
+        construirFondo.add(contadorCasas);
         
         contadorError = new JLabel(""+errores+"/2");
         contadorError.setBounds(600, 150, 100, 50);
         contadorError.setOpaque(true);
-        panelConstruir.add(contadorError);
+        construirFondo.add(contadorError);
         
         construirCasa = new JButton("Construir!");
         construirCasa.setBounds(350, 390, 100, 50);
         construirCasa.setBackground(Color.white);
         construirCasa.addActionListener(this);
-        panelConstruir.add(construirCasa);
+        construirFondo.add(construirCasa);
         
         volverPanel2 = new JButton("Panel 1");
         volverPanel2.setBounds(20, 20, 100, 50);
         volverPanel2.setBackground(Color.white);
         volverPanel2.addActionListener(this);
-        panelConstruir.add(volverPanel2);
+        construirFondo.add(volverPanel2);
         
         boton1 = new JButton("");
         boton1.setBounds(270, 100, 50, 50);
         boton1.setBackground(Color.white);
         boton1.addActionListener(this);
-        panelConstruir.add(boton1);
+        construirFondo.add(boton1);
         
         boton2 = new JButton("");
         boton2.setBounds(340, 100, 50, 50);
         boton2.setBackground(Color.white);
         boton2.addActionListener(this);
-        panelConstruir.add(boton2);
+        construirFondo.add(boton2);
         
         boton3 = new JButton("");
         boton3.setBounds(410, 100, 50, 50);
         boton3.setBackground(Color.white);
         boton3.addActionListener(this);
-        panelConstruir.add(boton3);
+        construirFondo.add(boton3);
         
         boton4 = new JButton("");
         boton4.setBounds(480, 100, 50, 50);
         boton4.setBackground(Color.white);
         boton4.addActionListener(this);
-        panelConstruir.add(boton4);
+        construirFondo.add(boton4);
         
         boton5 = new JButton("");
         boton5.setBounds(270, 170, 50, 50);
         boton5.setBackground(Color.white);
         boton5.addActionListener(this);
-        panelConstruir.add(boton5);
+        construirFondo.add(boton5);
         
         boton6 = new JButton("");
         boton6.setBounds(340, 170, 50, 50);
         boton6.setBackground(Color.white);
         boton6.addActionListener(this);
-        panelConstruir.add(boton6);
+        construirFondo.add(boton6);
         
         boton7 = new JButton("");
         boton7.setBounds(410, 170, 50, 50);
         boton7.setBackground(Color.white);
         boton7.addActionListener(this);
-        panelConstruir.add(boton7);
+        construirFondo.add(boton7);
         
         boton8 = new JButton("");
         boton8.setBounds(480, 170, 50, 50);
         boton8.setBackground(Color.white);
         boton8.addActionListener(this);
-        panelConstruir.add(boton8);
+        construirFondo.add(boton8);
         
         boton9 = new JButton("");
         boton9.setBounds(270, 240, 50, 50);
         boton9.setBackground(Color.white);
         boton9.addActionListener(this);
-        panelConstruir.add(boton9);
+        construirFondo.add(boton9);
         
         boton10 = new JButton("");
         boton10.setBounds(340, 240, 50, 50);
         boton10.setBackground(Color.white);
         boton10.addActionListener(this);
-        panelConstruir.add(boton10);
+        construirFondo.add(boton10);
         
         boton11 = new JButton("");
         boton11.setBounds(410, 240, 50, 50);
         boton11.setBackground(Color.white);
         boton11.addActionListener(this);
-        panelConstruir.add(boton11);
+        construirFondo.add(boton11);
         
         boton12 = new JButton("");
         boton12.setBounds(480, 240, 50, 50);
         boton12.setBackground(Color.white);
         boton12.addActionListener(this);
-        panelConstruir.add(boton12);
+        construirFondo.add(boton12);
         
         boton13 = new JButton("");
         boton13.setBounds(270, 310, 50, 50);
         boton13.setBackground(Color.white);
         boton13.addActionListener(this);
-        panelConstruir.add(boton13);
+        construirFondo.add(boton13);
         
         boton14 = new JButton("");
         boton14.setBounds(340, 310, 50, 50);
         boton14.setBackground(Color.white);
         boton14.addActionListener(this);
-        panelConstruir.add(boton14);
+        construirFondo.add(boton14);
         
         boton15 = new JButton("");
         boton15.setBounds(410, 310, 50, 50);
         boton15.setBackground(Color.white);
         boton15.addActionListener(this);
-        panelConstruir.add(boton15);
+        construirFondo.add(boton15);
         
         boton16 = new JButton("");
         boton16.setBounds(480, 310, 50, 50);
         boton16.setBackground(Color.white);
         boton16.addActionListener(this);
-        panelConstruir.add(boton16);
+        construirFondo.add(boton16);
     }
    
 //*****************************EJECUCION DE FUNCION DE BOTONES**********************
@@ -866,6 +931,7 @@ public class Ventana extends JFrame implements ActionListener{
         
         super.paint(g);
         if(panelJuego.isEnabled()){
+            //g.drawImage(fondo2.getImage(), 0, 200, null);
             //****BARRA DE VIDA JUGADOR****
             g.setColor(Color.black);
             g.fillRect(25, 100, 29, 240);
@@ -1195,4 +1261,5 @@ public class Ventana extends JFrame implements ActionListener{
          boton16.setEnabled(false);
          
      }
+     
 }

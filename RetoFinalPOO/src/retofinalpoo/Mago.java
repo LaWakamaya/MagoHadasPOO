@@ -13,7 +13,7 @@ public class Mago {
     
     int vidamax=100;
     int vida=100;
-    int hadasRobadas=60;
+    int hadasRobadas=50;
     int poder=hadasRobadas/10;
     
     
