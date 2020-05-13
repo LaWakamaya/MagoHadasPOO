@@ -18,6 +18,7 @@ public class Ogro {
     int damage=20;
     int boost=0;
     boolean dead=false;
+    
     void Ogro(int vidamax,int vida,int damage,int boost,boolean dead){
         this.vidamax = vidamax;
         this.vida = vidamax;
